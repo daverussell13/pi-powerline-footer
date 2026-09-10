@@ -2,15 +2,22 @@
 
 ## [Unreleased]
 
-### Fixed
-- **Idle CPU usage** — Stop unchanged background Git refreshes from scheduling another full TUI render, which could keep large idle sessions busy indefinitely.
-- **Legacy Git branch display** — Show the current branch on Git versions before 2.22. Thanks to chengxiang ([@chengxiang1997](https://github.com/chengxiang1997)) for #206.
-- **Working vibes** — Resolve `:low` and other thinking-level suffixes before looking up the configured generation model.
-- **Kaku terminal detection** — Detect Kaku as supporting Nerd Fonts through its `TERM_PROGRAM` value. Thanks to [@DeH40](https://github.com/DeH40) for #207.
-- **Working vibes** — Silently retain the fallback message when on-demand generation outlives its extension context. Thanks to [@efuentesp](https://github.com/efuentesp) for #210.
+## [0.17.1] - 2026-09-10
+
+### Highlights
+- Large idle sessions now settle instead of repeatedly redrawing the full interface.
+- Working Vibes handles thinking-level model names and session reloads more reliably.
+- Older Git versions and the Kaku terminal now display the expected branch and Nerd Font details.
 
 ### Changed
-- **Working vibes** — Use `openai-codex/gpt-5.6-luna:low` as the default generation model.
+- **Working Vibes default model** — Use `openai-codex/gpt-5.6-luna:low` for generated status messages.
+
+### Fixed
+- **Idle CPU usage** — Avoid repeated full-screen redraws when background Git checks return unchanged results.
+- **Legacy Git support** — Display the current branch on Git versions older than 2.22. Thanks to [@chengxiang1997](https://github.com/chengxiang1997) for #206.
+- **Kaku terminal support** — Recognize Kaku as a Nerd Font-capable terminal. Thanks to [@DeH40](https://github.com/DeH40) for #207.
+- **Working Vibes model selection** — Handle `:low` and other thinking-level suffixes when selecting the configured model.
+- **Working Vibes reload safety** — Keep the fallback message when generation finishes after a session reload. Thanks to [@efuentesp](https://github.com/efuentesp) for #210.
 
 ## [0.17.0] - 2026-09-04
 
