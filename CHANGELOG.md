@@ -2,13 +2,21 @@
 
 ## [Unreleased]
 
+## [0.17.2] - 2026-09-20
+
+### Highlights
+- Stashed drafts now survive `/reload` and remain isolated to the current session.
+- Responsive footer details no longer take an extra row away from the editor.
+- Border colors and welcome-screen resource counts stay accurate as your setup changes.
+- Git failures and multilingual Working Vibes messages are handled more gracefully.
+
 ### Fixed
-- **Working Vibes punctuation** — Use script-appropriate ellipses for Latin and CJK loading messages, including non-BMP Han and Japanese/Korean scripts. Thanks to [@kyrie2to11](https://github.com/kyrie2to11) for #215.
-- **Git polling failures** — Keep cached or fallback Git details available when starting the Git process fails synchronously. Thanks to [@hhhhddh](https://github.com/hhhhddh) for #219.
-- **Live editor border colors** — Keep Powerline editor borders in sync with Pi's active editor mode. Thanks to [@drewmala](https://github.com/drewmala) for #221.
-- **Fullscreen footer space** — Render responsive secondary Powerline content in Pi's reserved footer row instead of duplicating it in a below-editor widget. Thanks to [@JBP-1994](https://github.com/JBP-1994) for #217.
-- **Accurate welcome counts** — Count effective loaded skills and prompt templates through Pi's public command API, including package resources, and omit the unsupported extension count. Thanks to [@MORAY-charlie](https://github.com/MORAY-charlie) for #218.
-- **Editor stash reload safety** — Preserve the active editor stash across `/reload` of the same session without carrying it into other sessions. Thanks to [@Avg8888](https://github.com/Avg8888) for #220.
+- **Editor stash reload safety** — Preserve the active editor stash across `/reload` without carrying it into another session. Thanks to [@Avg8888](https://github.com/Avg8888) for #220.
+- **Fullscreen footer space** — Show responsive secondary details in the reserved footer row instead of taking another row away from the editor. Thanks to [@JBP-1994](https://github.com/JBP-1994) for #217.
+- **Live editor border colors** — Keep Powerline borders in sync with Pi's active editor mode. Thanks to [@drewmala](https://github.com/drewmala) for #221.
+- **Accurate welcome counts** — Show accurate counts for loaded skills and prompt templates, including package-provided resources, and omit the unreliable extension count. Thanks to [@MORAY-charlie](https://github.com/MORAY-charlie) for #218.
+- **Git polling failures** — Keep the footer responsive and retain available Git details when the Git process cannot start. Thanks to [@hhhhddh](https://github.com/hhhhddh) for #219.
+- **Working Vibes punctuation** — Use appropriate ellipses in Latin, Chinese, Japanese, and Korean messages. Thanks to [@kyrie2to11](https://github.com/kyrie2to11) for #215.
 
 ## [0.17.1] - 2026-09-10
 
