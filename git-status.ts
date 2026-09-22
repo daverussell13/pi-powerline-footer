@@ -26,6 +26,7 @@ interface CachedRemoteHost {
 
 const CACHE_TTL_MS = 1000; // 1 second for file status
 const BRANCH_TTL_MS = 500; // Shorter TTL so branch updates quickly after invalidation
+const BRANCH_FETCH_TIMEOUT_MS = 1000; // Non-blocking fallback tolerates busy filesystems
 const REMOTE_TTL_MS = 60_000; // Origin remote almost never changes within a session
 let cachedStatus: CachedGitStatus | null = null;
 let cachedBranch: CachedBranch | null = null;
@@ -171,10 +172,13 @@ function runGit(args: string[], cwd: string, timeoutMs = 200): Promise<string | 
  * For detached HEAD, returns the short commit SHA (matches provider's "detached" behavior).
  */
 async function fetchGitBranch(cwd: string): Promise<string | null> {
-  const branch = await runGit(["symbolic-ref", "--short", "HEAD"], cwd);
+  // Branch changes are infrequent, but resolving an attached branch can run
+  // behind a busy filesystem. Keep fallback lookup non-blocking while allowing
+  // enough time for both commands to start under load.
+  const branch = await runGit(["symbolic-ref", "--short", "HEAD"], cwd, BRANCH_FETCH_TIMEOUT_MS);
   if (branch) return branch;
 
-  const sha = await runGit(["rev-parse", "--short", "HEAD"], cwd);
+  const sha = await runGit(["rev-parse", "--short", "HEAD"], cwd, BRANCH_FETCH_TIMEOUT_MS);
   return sha ? `${sha} (detached)` : null;
 }
 

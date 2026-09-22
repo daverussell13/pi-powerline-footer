@@ -3320,37 +3320,47 @@ export default function powerlineFooter(pi: ExtensionAPI) {
 
     ctx.ui.setEditorComponent(editorFactory);
 
-    ctx.ui.setFooter((tui: any, theme: Theme, footerData: ReadonlyFooterDataProvider) => {
-      footerDataRef = footerData;
-      // Pi sets the provider cwd from sessionManager before binding session_start.
-      // Do not treat its branch as authoritative if the extension cwd differs.
-      footerDataCwd = ctx.sessionManager?.getCwd?.() ?? null;
-      tuiRef = tui;
-      installFooterStatusRepaintHook(footerData);
-      const unsub = footerData.onBranchChange(() => {
-        invalidateGitStatus();
-        invalidateGitBranch();
-        requestStatusRender();
-      });
-      const unsubGitUpdates = subscribeGitUpdates(() => requestStatusRender());
-
-      return {
-        dispose() {
-          unsub();
-          unsubGitUpdates();
-          footerDataRef = null;
-          footerDataCwd = null;
-          restoreFooterStatusRepaintHook?.();
-          restoreFooterStatusRepaintHook = null;
-        },
-        invalidate() {
+    const installCustomFooter = () => {
+      ctx.ui.setFooter((tui: any, theme: Theme, footerData: ReadonlyFooterDataProvider) => {
+        footerDataRef = footerData;
+        // Pi sets the provider cwd from sessionManager before binding session_start.
+        // Do not treat its branch as authoritative if the extension cwd differs.
+        footerDataCwd = ctx.sessionManager?.getCwd?.() ?? null;
+        tuiRef = tui;
+        installFooterStatusRepaintHook(footerData);
+        const unsub = footerData.onBranchChange(() => {
+          invalidateGitStatus();
+          invalidateGitBranch();
           requestStatusRender();
-        },
-        render(width: number): string[] {
-          return renderPowerlineSecondaryLines(width, theme);
-        },
-      };
-    });
+        });
+        const unsubGitUpdates = subscribeGitUpdates(() => requestStatusRender());
+
+        return {
+          dispose() {
+            unsub();
+            unsubGitUpdates();
+            footerDataRef = null;
+            footerDataCwd = null;
+            restoreFooterStatusRepaintHook?.();
+            restoreFooterStatusRepaintHook = null;
+          },
+          invalidate() {
+            requestStatusRender();
+          },
+          render(width: number): string[] {
+            return renderPowerlineSecondaryLines(width, theme);
+          },
+        };
+      });
+    };
+
+    installCustomFooter();
+    // `setFooter()` is global rather than scoped to an extension. Reapply ours after
+    // all session_start handlers have run so a later extension's cleanup cannot
+    // restore Pi's built-in footer beneath the powerline widget.
+    setTimeout(() => {
+      if (enabled && currentCtx === ctx) installCustomFooter();
+    }, 0);
 
     installPowerlineWidgets(ctx);
   }
