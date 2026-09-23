@@ -1,8 +1,8 @@
 {
   "colors": {
-    "model": "#d787af",
+    "model": "accent",
     "shellMode": "accent",
-    "path": "#00afaf",
+    "path": "accent",
     "gitDirty": "warning",
     "gitClean": "success",
     "thinking": "thinkingOff",

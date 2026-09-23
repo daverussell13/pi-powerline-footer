@@ -21,9 +21,10 @@ export interface PowerlineThemeConfig {
 
 // Default color scheme (uses pi theme colors)
 const DEFAULT_COLORS: Required<ColorScheme> = {
-  model: "#d787af",  // Pink/mauve (matching original colors.ts)
+  // Use Pi semantic colors so the footer follows the active Pi theme.
+  model: "accent",
   shellMode: "accent",
-  path: "#00afaf",  // Teal/cyan (matching original colors.ts)
+  path: "accent",
   gitDirty: "warning",
   gitClean: "success",
   thinking: "thinkingOff",
