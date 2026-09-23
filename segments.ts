@@ -322,8 +322,10 @@ const costSegment: StatusLineSegment = {
     }
 
     const subscriptionDisplay = ctx.options.cost?.subscriptionDisplay ?? "subscription";
-    if (subscriptionDisplay === "reported-cost" && reportedCost) {
-      return { content: color(ctx, "cost", reportedCost), visible: true };
+    if (subscriptionDisplay === "reported-cost") {
+      return reportedCost
+        ? { content: color(ctx, "cost", reportedCost), visible: true }
+        : { content: "", visible: false };
     }
     if (subscriptionDisplay === "both" && reportedCost) {
       return { content: color(ctx, "cost", `${reportedCost} (sub)`), visible: true };

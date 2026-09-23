@@ -223,7 +223,7 @@ Subscription cost display accepts:
 | Mode | Subscription + reported cost | Subscription + no reported cost |
 |------|------------------------------|----------------------------------|
 | `subscription` | `(sub)` | `(sub)` |
-| `reported-cost` | `$0.12` | `(sub)` |
+| `reported-cost` | `$0.12` | hidden |
 | `both` | `$0.12 (sub)` | `(sub)` |
 
 Segment display formats (opt-in; defaults match the historical rendering):
