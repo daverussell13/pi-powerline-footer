@@ -24,7 +24,8 @@ const DEFAULT_COLORS: Required<ColorScheme> = {
   // Use Pi semantic colors so the footer follows the active Pi theme.
   model: "accent",
   shellMode: "accent",
-  path: "accent",
+  // Inline-code is teal in Catppuccin Mocha, keeping paths distinct from the accent-colored model.
+  path: "mdCode",
   gitDirty: "warning",
   gitClean: "success",
   thinking: "thinkingOff",

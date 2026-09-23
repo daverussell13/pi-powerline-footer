@@ -501,7 +501,7 @@ Colors are configurable via pi's theme system. Each preset defines its own color
 |----------|-------------|-------------|
 | `model` | `accent` | Model name |
 | `shellMode` | `accent` | Bash mode segment |
-| `path` | `accent` | Directory path |
+| `path` | `mdCode` | Directory path |
 | `gitClean` | `success` | Git branch (clean) |
 | `gitDirty` | `warning` | Git branch (dirty) |
 | `thinking` | `thinkingOff` | Thinking level (`off`) |
@@ -523,7 +523,7 @@ Create `extensions/powerline-footer/theme.json` in the agent dir (`~/.pi/agent` 
   "colors": {
     "model": "accent",
     "shellMode": "accent",
-    "path": "accent",
+    "path": "mdCode",
     "gitClean": "success",
     "thinking": "thinkingOff",
     "thinkingMinimal": "thinkingMinimal",
