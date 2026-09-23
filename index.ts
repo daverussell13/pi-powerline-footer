@@ -3143,6 +3143,18 @@ export default function powerlineFooter(pi: ExtensionAPI) {
         return true;
       };
 
+      // Keep the editor chrome on Pi's active accent rather than letting Pi
+      // replace it with a per-thinking-level or bash-mode border color.
+      const accentBorderColor = typeof editorTheme?.selectList?.selectedText === "function"
+        ? editorTheme.selectList.selectedText.bind(editorTheme.selectList)
+        : editorTheme.borderColor;
+      const applyAccentEditorBorder = () => {
+        if (typeof accentBorderColor === "function") {
+          editor.borderColor = accentBorderColor;
+        }
+      };
+      applyAccentEditorBorder();
+
       currentEditor = editor;
       trackPromptHistory(editor);
       restorePromptHistory(editor);
@@ -3239,6 +3251,9 @@ export default function powerlineFooter(pi: ExtensionAPI) {
 
       const originalRender = editor.render.bind(editor);
       editor.render = (width: number): string[] => {
+        // Pi refreshes borderColor on thinking and bash-mode changes. Reapply
+        // the Powerline policy before every render so the input stays accent-colored.
+        applyAccentEditorBorder();
         const renderPowerlineEditor = (): string[] => {
           if (!editorPerf.options.editorChrome) {
             return editorPerf.options.enabled
